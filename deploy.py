@@ -70,6 +70,7 @@ def register():
         df_users = pd.read_sql("SELECT * FROM users", conn)
         random_number = int(np.random.randint(0,300,1))
         print(random_number)
+        form.username.data = str.lower(str(form.username.data))
         try:
             if form.username.data in df_users['name'].values:
                 return("UGYLDIG, DOBBELT NAVN")
