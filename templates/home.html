@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Absentia</title>
+  <!-- Bootstrap core CSS -->
+  <link href="{{url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css' )}}" rel="stylesheet">
+
+  
+  <!-- Custom styles for this template -->
+  <style>
+
+  </style>
+</head>
+
+
+
+<center>
+<img src="https://img00.deviantart.net/76a9/i/2013/363/8/e/total_war__rome_2___rome_faction_symbol_by_undevicesimus-d6zradm.png" alt="Smiley face" height="350" width="350">
+
+<h1><a href="http://127.0.0.1:5000/register">Qui non paucis millibus praecidendus arma ferrumque</a></h1>
+<br>
+<h1 style="background-color:Tomato;">VINNEREN I DAG ER: {{winner}}!</h1>
+<br>
+<h2>Studenter tilstede i dag</h2>
+
+
+{% for item,item2,item3 in tripple%}
+  <li><b>{{item}}</b>, <italic>lotteritall:</italic> {{item2}}, <italic>Total oppmøte: </italic>{{item3}}</li>
+  {% endfor %}
+ 
+
+</center>
+</body>
+
+</html>
