@@ -54,20 +54,18 @@
 
 
 <center>
-<img src="https://img00.deviantart.net/c264/i/2013/363/e/6/total_war__rome_2___parthia_faction_symbol_by_undevicesimus-d6zrbod.png" alt="Smiley face" height="250" width="250">
-<center>
-<h2>Admin Panel:</h2>
-<form>
-  <input type="button" value="Reset day list" onclick="window.location.href='http://127.0.0.1:5000/system/reset'" />
-  </form>
-</center>
+<img src="https://img00.deviantart.net/76a9/i/2013/363/8/e/total_war__rome_2___rome_faction_symbol_by_undevicesimus-d6zradm.png" height="250" width="250">
+
+<h1>Qui non paucis millibus praecidendus arma ferrumque</h1>
+<br>
+<h1 style="background-color:red;">{{reset}}!<br>
 
 <br>
-<h2>Total oversikt</h2>
+<h2>Studenter tilstede i dag</h2>
 
 
-{% for item,item2 in tripple%}
-  <li><b>{{item}}</b>, <italic>Total oppmøte: </italic>{{item2}}</li>
+{% for item,item2,item3 in tripple%}
+  <li><b>{{item}}</b>, <italic>lotteritall:</italic> {{item2}}, <italic>Total oppmøte: </italic>{{item3}}</li>
   {% endfor %}
  
 

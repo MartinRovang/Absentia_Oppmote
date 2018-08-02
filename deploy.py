@@ -5,9 +5,11 @@ import numpy as np
 import sqlite3 as sql
 import sys,os
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import Column, Integer, Unicode, UnicodeText
+from sqlalchemy import Column, Integer, Unicode, UnicodeText, Date, Integer, String
 from sqlalchemy import create_engine, ForeignKey
-
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship, backref
+import tabledeff
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 
@@ -65,6 +67,20 @@ def loot(winner_number):
     return link
 
 
+
+@app.route('/system/reset')
+def reset_day():
+    try:
+        os.remove('temp.db')
+        tabledeff.reset_dayusers()
+    except:
+        tabledeff.reset_dayusers()
+        reset = "Day list have been reset"
+        return render_template('home_reset.html', reset = reset) 
+    reset = "Day list have been reset"
+    return render_template('home_reset.html', reset = reset)
+
+
 @app.route('/')
 def home():
     try:
@@ -100,11 +116,12 @@ def register():
         df_users = pd.read_sql("SELECT * FROM users", conn)
         random_number = int(np.random.randint(0,100,1))
         print(random_number)
-        form.username.data = str.lower(str(form.username.data))
         try:
+            form.username.data = str.lower(str(form.username.data))
             if form.username.data in df_users['name'].values:
                 return("UGYLDIG, DOBBELT NAVN")
         except:
+            print("ERRRIOR")
             pass
         else:
             c.execute("INSERT INTO users (name, number) VALUES (?,?)", (form.username.data, str(random_number),))
@@ -120,6 +137,12 @@ def register():
     return render_template('register.html', form=form)
 
 
+#remove duplicates
+def dup_remove(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
+
 
 @app.route('/admin')
 def admin():
@@ -127,7 +150,8 @@ def admin():
         total_visits = []
         conn = sql.connect("real.db")
         df_users = pd.read_sql("SELECT * FROM users ", conn)
-        users_defined = df_users['name']
+        users_defined = dup_remove(df_users['name'])
+        print(users_defined)
         for i in users_defined:
             df_total_visits = pd.read_sql("SELECT * FROM users WHERE (name LIKE '{}') ".format(i), conn)
             total_visits.append(len(df_total_visits['name']))
