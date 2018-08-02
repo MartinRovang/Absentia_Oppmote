@@ -91,6 +91,22 @@ def register():
 
 
 
+@app.route('/admin')
+def admin():
+    try:
+        total_visits = []
+        conn = sql.connect("real.db")
+        df_users = pd.read_sql("SELECT * FROM users ", conn)
+        users_defined = df_users['name']
+        for i in users_defined:
+            df_total_visits = pd.read_sql("SELECT * FROM users WHERE (name LIKE '{}') ".format(i), conn)
+            total_visits.append(len(df_total_visits['name']))
+        conn.close()
+        return render_template('admin.html', tripple = zip(users_defined, total_visits))
+    except:
+        return "Error!"
+
+
 
 # thread = threading.Thread(target=foo)
 # thread.start()
