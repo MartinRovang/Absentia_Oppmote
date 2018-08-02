@@ -35,6 +35,32 @@ class RegistrationForm(Form):
     username = StringField('Ditt Navn', [validators.Length(min=4, max=25)])
 
 
+def loot():
+    magic_number = np.random.randint(0,10,1)
+    if magic_number == 0:
+        return 'https://gbf.wiki/images/thumb/a/aa/Cosmic_Sword.png/462px-Cosmic_Sword.png'
+    if magic_number == 1:
+        return 'https://www.claires.com/dw/image/v2/BBTK_PRD/on/demandware.static/-/Sites-master-catalog/default/dwb3e89841/images/hi-res/55138_1.jpg'
+    if magic_number == 2:
+        return 'https://www.claires.com/dw/image/v2/BBTK_PRD/on/demandware.static/-/Sites-master-catalog/default/dw88b9b105/images/hi-res/38215_1.jpg'
+    if magic_number == 3:
+        return 'https://thumbs.dreamstime.com/z/american-legendary-pistol-white-background-military-model-47937475.jpg'
+    if magic_number == 4:
+        return 'https://cdn-4.jjshouse.com/upimg/jjshouse/s1140/4a/e3/af62d123841b74b7e4bc431e0aec4ae3.jpg'
+    if magic_number == 5:
+        return 'http://ukonic.com/wp-content/uploads/2017/11/WOW_PALADINE_ROBE_1-1000.jpg'
+    if magic_number == 6:
+        return 'https://thebitbin.files.wordpress.com/2012/08/boots1.png'
+    if magic_number == 7:
+        return 'https://cdn-media.sportamore.se/uploads/products/5711176095404_001_7a2b071ce45943269c9b78d04124f2e7.jpg'
+    if magic_number == 8:
+        return 'http://www.omegaartworks.com/images/omega/490-dragonfly-knife-green-andamp;-blackandamp;-daggers.jpg'
+    if magic_number == 9:
+        return 'https://www.thinkgeek.com/images/products/zoom/1f1a_kawaii_hooded_unicorn_bathrobe.jpg'
+    if magic_number == 10:
+        return 'http://www.delonghi.com/Global/recipes/multifry/3_pizza_fresca.jpg'
+
+
 
 
 @app.route('/')
@@ -55,7 +81,8 @@ def home():
             df_total_visits = pd.read_sql("SELECT * FROM users WHERE (name LIKE '{}') ".format(i), conn)
             total_visits.append(len(df_total_visits['name']))
         conn.close()
-        return render_template('home.html', tripple = zip(users_defined, number, total_visits), winner = winner_number_student)
+        loot_item = loot()
+        return render_template('home.html', tripple = zip(users_defined, number, total_visits), winner = winner_number_student, loot_item = loot_item)
     except:
         return render_template('home.html')
 
