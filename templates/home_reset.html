@@ -3,14 +3,15 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Absentia</title>
   <!-- Bootstrap core CSS -->
   <link href="{{url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css' )}}" rel="stylesheet">
-
-  
+     <!-- Bootstrap core JavaScript -->
+     <script src="{{url_for('static', filename ='vendor/jquery/jquery.min.js' )}}"></script>
+     <script src="{{url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js' )}}"></script>
   <!-- Custom styles for this template -->
   <style>
 
@@ -24,7 +25,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="https://norsent.herokuapp.com"></a>
+      <a class="navbar-brand" href="/"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -41,7 +42,7 @@
             <a class="nav-link" href="/register">Registrering</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin">admin</a>
+            <a class="nav-link" href="/admin_login">admin</a>
           </li>
         </ul>
       </div>
@@ -60,7 +61,7 @@
 <h1 style="background-color:red;">{{reset}}!<br>
 
 <br>
-<h2>Studenter tilstede i dag<font color="red">INF-1049</font></h2>
+<h2>Studenter tilstede i dag. <font color="red">INF-1049</font></h2>
 
 
 {% for item,item2,item3 in tripple%}

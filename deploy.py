@@ -16,8 +16,6 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 sys.path.insert(0, os.path.realpath(os.path.dirname(__file__)))
 os.chdir(os.path.realpath(os.path.dirname(__file__)))
-engine = create_engine('sqlite:///twitter.db', echo=True)
-Session = sessionmaker(bind=engine)
 
 
 
@@ -30,11 +28,18 @@ def movingavarage(values,window):
 	smas = np.convolve(values,weights,'valid')
 	return smas
 
-
+#remove duplicates
+def dup_remove(seq):
+    seen = set()
+    seen_add = seen.add
+    return [x for x in seq if not (x in seen or seen_add(x))]
 
 
 class RegistrationForm(Form):
     username = StringField('Ditt Navn', [validators.Length(min=4, max=25)])
+
+class AdminForm(Form):
+    password = PasswordField('Passord')
 
 
 def loot(winner_number):
@@ -132,33 +137,52 @@ def register():
             c.execute("INSERT INTO users (name) VALUES (?)", (form.username.data,))
             conn.commit()
             conn.close()
-            return render_template('register.html', form = form, takk = 'Takk!, LotteriID: %d'%random_number)
+            return render_template('register.html', form = form, takk = 'Takk!, Lotteri-ID: %d'%random_number)
 
     return render_template('register.html', form=form)
 
 
-#remove duplicates
-def dup_remove(seq):
-    seen = set()
-    seen_add = seen.add
-    return [x for x in seq if not (x in seen or seen_add(x))]
 
 
-@app.route('/admin')
-def admin():
-    try:
-        total_visits = []
-        conn = sql.connect("real.db")
-        df_users = pd.read_sql("SELECT * FROM users ", conn)
-        users_defined = dup_remove(df_users['name'])
-        print(users_defined)
-        for i in users_defined:
-            df_total_visits = pd.read_sql("SELECT * FROM users WHERE (name LIKE '{}') ".format(i), conn)
-            total_visits.append(len(df_total_visits['name']))
-        conn.close()
-        return render_template('admin.html', tripple = zip(users_defined, total_visits))
-    except:
-        return "Error!"
+@app.route('/admin_login', methods=['GET', 'POST'])
+def admin_login():
+    form = AdminForm(request.form)
+    if request.method == 'POST' and form.validate():
+        with open('pws.dat', 'r') as pws:
+            if str(pws.read()) == str(form.password.data):
+                total_visits = []
+                conn = sql.connect("real.db")
+                df_users = pd.read_sql("SELECT * FROM users ", conn)
+                users_defined = dup_remove(df_users['name'])
+                print(users_defined)
+                for i in users_defined:
+                    df_total_visits = pd.read_sql("SELECT * FROM users WHERE (name LIKE '{}') ".format(i), conn)
+                    total_visits.append(len(df_total_visits['name']))
+                conn.close()
+                return render_template('admin.html', tripple = zip(users_defined, total_visits), form=form)
+            else:
+                error_login = "Feil passord"
+                return render_template('admin_login.html', form = form, error_login = error_login)
+    return render_template('admin_login.html', form = form)
+
+
+
+
+# @app.route('/sys/admin', methods=['GET', 'POST'])
+# def admin():
+#     try:
+#         total_visits = []
+#         conn = sql.connect("real.db")
+#         df_users = pd.read_sql("SELECT * FROM users ", conn)
+#         users_defined = dup_remove(df_users['name'])
+#         print(users_defined)
+#         for i in users_defined:
+#             df_total_visits = pd.read_sql("SELECT * FROM users WHERE (name LIKE '{}') ".format(i), conn)
+#             total_visits.append(len(df_total_visits['name']))
+#         conn.close()
+#         return render_template('admin.html', tripple = zip(users_defined, total_visits), form=form)
+#     except:
+#         return "Error!"
 
 
 

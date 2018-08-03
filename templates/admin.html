@@ -3,13 +3,15 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
   <meta name="description" content="">
   <meta name="author" content="">
   <title>Absentia</title>
   <!-- Bootstrap core CSS -->
   <link href="{{url_for('static', filename ='vendor/bootstrap/css/bootstrap.min.css' )}}" rel="stylesheet">
-
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url_for('static', filename ='vendor/jquery/jquery.min.js' )}}"></script>
+    <script src="{{url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js' )}}"></script>
   
   <!-- Custom styles for this template -->
   <style>
@@ -24,7 +26,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="https://norsent.herokuapp.com"></a>
+      <a class="navbar-brand" href="/"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -41,29 +43,25 @@
             <a class="nav-link" href="/register">Registrering</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/admin">admin</a>
+            <a class="nav-link" href="/admin_login">admin</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-
   <br>
-  <br>
-  <br>
-
-
-<center>
-<img src="https://i.imgur.com/fywC7hd.png" alt="Smiley face" height="250" width="250">
+<br>
 <br>
 <br>
 <center>
-<h2>Admin Panel:</h2>
-<form>
-  <input type="button" value="Reset day list" onclick="window.location.href='/system/reset'" />
-  </form>
-</center>
-
+<img src="https://i.imgur.com/3wB0b8a.jpg" alt="Smiley face" height="300" width="1000">
+<br>
+<br>
+<h2>Administrator oversikt:</h2><br>
+    <form>
+      <!-- <input type="button" value="Reset day list" onclick="window.location.href='/system/reset'" /> -->
+      <button type="button" class="btn btn-danger" onclick="window.location.href='/system/reset'">Reset day list</button>
+      </form>
 <br>
 <h2>Total oversikt. <font color="red">INF-1049</font></h2>
 
@@ -77,3 +75,5 @@
 </body>
 
 </html>
+
+

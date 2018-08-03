@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,14 +12,13 @@
     <!-- Bootstrap core JavaScript -->
     <script src="{{url_for('static', filename ='vendor/jquery/jquery.min.js' )}}"></script>
     <script src="{{url_for('static', filename ='vendor/bootstrap/js/bootstrap.bundle.min.js' )}}"></script>
+
   
   <!-- Custom styles for this template -->
   <style>
 
   </style>
 </head>
-
-
 
 
 
@@ -53,35 +50,28 @@
       </div>
     </div>
   </nav>
-
-
-  <br>
-  <br>
-  <br>
-
+<br>
+<br>
+<br>
+<br>
 <center>
-<img src="https://i.imgur.com/fywC7hd.png" alt="Smiley face" height="250" width="250">
+<img src="https://i.imgur.com/3wB0b8a.jpg" alt="Smiley face" height="350" width="1000">
+
   <br>
   <br>
- <h2>Oppmøtebekreftelse for <font color="red">INF-1049</font></h2>
- <br>
-<h1>
+    <h2>Admin Login:</h2>
+        {% from "_formhelpers.html" import render_field %}
+        <form method="post" autocomplete="off">
+            <div class="container">
+          <dl>
+            {{ render_field(form.password) }}
+          </dl>
+          <button type="submit" class="btn">Login</button>
+        </div>
+        </form>
+        <br>
+        <h1 style="background-color:red;">{{error_login}}<br></h1>
+        </center>
+</body>
 
-  
-{% from "_formhelpers.html" import render_field %}
-<form method="post" autocomplete="off">
-    <div class="container">
-  <dl>
-    {{ render_field(form.username) }}
-  </dl>
-  <!-- <p><input type="submit" value="Registrer"> -->
-    <button type="submit" class="btn">Registrer</button>
-  </div>
-</form>
-
-{{takk}}
-
-</h1>
-</center>
-
-
+</html>
