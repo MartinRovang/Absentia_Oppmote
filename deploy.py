@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session, abort, make_response, send_file, jsonify, Response
+from flask import Flask, flash, redirect, render_template, request, session, abort, make_response, send_file, jsonify, Response, url_for
 from threading import Lock, Timer
 import pandas as pd
 import numpy as np
@@ -11,7 +11,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref
 import tabledeff
 from wtforms import Form, BooleanField, StringField, PasswordField, validators
-
+import string
 
 
 sys.path.insert(0, os.path.realpath(os.path.dirname(__file__)))
@@ -122,7 +122,7 @@ def register():
         random_number = int(np.random.randint(0,100,1))
         print(random_number)
         try:
-            form.username.data = str.lower(str(form.username.data))
+            form.username.data = string.capwords(str(form.username.data))
             if form.username.data in df_users['name'].values:
                 return("UGYLDIG, DOBBELT NAVN")
         except:
@@ -137,7 +137,9 @@ def register():
             c.execute("INSERT INTO users (name) VALUES (?)", (form.username.data,))
             conn.commit()
             conn.close()
-            return render_template('register.html', form = form, takk = 'Takk!, Lotteri-ID: %d'%random_number)
+            name_inserted = form.username.data
+            form.username.data = ""
+            return render_template('register.html', form = form, takk = '%s registert!, Lotteri-ID: %d'%(name_inserted, random_number))
 
     return render_template('register.html', form=form)
 
