@@ -1,4 +1,4 @@
-<p>lokal app for oppmøte for studenter
+<p>lokal app, oppmøte for studenter
 
 ![alt text](https://i.imgur.com/HBa0bDp.png)
 
